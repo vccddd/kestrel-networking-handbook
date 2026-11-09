@@ -1,0 +1,37 @@
+name: Verify teaching examples
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'samples/**'
+      - 'scripts/verify_book_examples.py'
+      - 'docs/book/**'
+      - '.github/workflows/checks.yml'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  examples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check protocol and pipeline contracts
+        working-directory: samples
+        run: dotnet run --project IndustrialGateway.Checks/IndustrialGateway.Checks.csproj -c Release
+      - name: Check real socket scenarios
+        working-directory: samples
+        run: python3 IndustrialGateway/verify.py
+      - name: Compile complete book snippets
+        run: python3 scripts/verify_book_examples.py

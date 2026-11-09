@@ -1,0 +1,108 @@
+site_name: 从零理解高性能 Kestrel 网络编程
+site_description: 面向初学者的 Kestrel 网络编程手册，配合源码与工业采集网关，讲清网络模型、Pipelines、内存所有权和设计缘由。
+site_url: https://vccddd.github.io/kestrel-networking-handbook/
+repo_url: https://github.com/vccddd/kestrel-networking-handbook
+repo_name: vccddd/kestrel-networking-handbook
+copyright: 基于 xljiulang/KestrelApp · MIT License
+
+docs_dir: .build/docs
+site_dir: _site
+use_directory_urls: true
+strict: true
+
+validation:
+  nav:
+    omitted_files: ignore
+  links:
+    anchors: warn
+
+theme:
+  name: material
+  language: zh
+  font: false
+  icon:
+    logo: material/book-open-page-variant
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: default
+      primary: teal
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - scheme: slate
+      primary: teal
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - 开始阅读: index.md
+  - 第一篇 · 网络与 Kestrel:
+      - 1. 从一条温度数据认识网络: docs/book/part-1/01-network.md
+      - 2. 仓库与系统地图: docs/book/part-1/02-repository.md
+      - 3. Kestrel 连接模型: docs/book/part-1/03-kestrel.md
+      - 4. 中间件设计: docs/book/part-1/04-middleware.md
+      - 5. 连接与内存生命周期: docs/book/part-1/05-lifecycle.md
+      - 6. Echo 与文本协议: docs/book/part-1/06-echo-telnet.md
+  - 第二篇 · 缓冲与性能:
+      - 7. 内存视图与所有权: docs/book/part-2/07-memory.md
+      - 8. 缓冲写入: docs/book/part-2/08-buffer-writer.md
+      - 9. Pipelines 契约: docs/book/part-2/09-pipelines.md
+      - 10. 多段与增量解析: docs/book/part-2/10-framing.md
+      - 11. 背压与资源边界: docs/book/part-2/11-backpressure.md
+      - 12. 性能测量: docs/book/part-2/12-performance.md
+  - 第三篇 · 示例与工业架构:
+      - 13. 传输包装: docs/book/part-3/13-transports.md
+      - 14. Redis 应用管道: docs/book/part-3/14-redis.md
+      - 15. 代理与 TLS: docs/book/part-3/15-proxy-tls.md
+      - 16. 工业遥测网关: docs/book/part-3/16-industrial-design.md
+      - 17. 生产故障设计: docs/book/part-3/17-production.md
+      - 18. 可观测性: docs/book/part-3/18-observability.md
+  - 第四篇 · 实验与训练:
+      - 19. 运行网关实验: docs/book/part-4/19-lab.md
+      - 20. 十二个综合练习: docs/book/part-4/20-exercises.md
+      - 21. 日常判断与规矩: docs/book/part-4/21-field-guide.md
+  - 附录:
+      - A. 术语速查: docs/book/appendices/glossary.md
+      - B. 勘误与边界: docs/book/appendices/corrections.md
+      - C. 源码地图: docs/book/appendices/sources.md
+      - D. 验证记录: docs/book/appendices/validation.md
+      - E. 发布与维护: docs/book/appendices/publishing.md

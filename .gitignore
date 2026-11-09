@@ -1,0 +1,24 @@
+# .NET build outputs
+**/bin/
+**/obj/
+# Python and local tools
+__pycache__/
+*.pyc
+.venv/
+# Generated documentation and reading site
+.build/
+_site/
+# Local editor and OS state
+.idea/
+.vscode/
+.DS_Store
+*.user
+*.suo
+# Certificate material is never needed for reading this book
+*.key
+*.pfx
+*.p12
+*.pem
+# Optional personal exercises
+samples/MemoryScratch/
+samples/NetworkScratch/
