@@ -36,7 +36,7 @@ def main():
         page.goto(lab_url, wait_until="networkidle")
         expect(page.locator(".md-content h1")).to_contain_text("第 19 章")
         expect(page.locator('.md-sidebar--secondary nav a').first).to_be_visible()
-        copy = page.locator(".md-clipboard").first
+        copy = page.locator('.md-clipboard, .md-code__button[data-md-type="copy"]').first
         expect(copy).to_be_visible()
         copy.click()
         clipboard = page.evaluate("navigator.clipboard.readText()")

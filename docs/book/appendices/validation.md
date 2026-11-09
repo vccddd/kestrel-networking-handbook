@@ -112,9 +112,9 @@ python3 scripts/verify_book_examples.py
 
 ## D.6 GitHub 发布补充验证
 
-独立教程仓库使用MkDocs Material 9.6.14及MkDocs 1.6.1生成阅读站，通过GitHub Actions部署Pages。首次发布提交为 `8c3813b6e53bed5397b115f2df20513f1ddbd5c4`；[站点发布任务](https://github.com/vccddd/kestrel-networking-handbook/actions/runs/42573292891)与[Ubuntu示例检查任务](https://github.com/vccddd/kestrel-networking-handbook/actions/runs/42573292858)均成功。Ubuntu检查执行162断言、真实socket验证及正文完整代码块编译，均通过；这不是完整跨平台兼容认证。
+独立教程仓库使用MkDocs Material及MkDocs 1.6.1生成阅读站（当前依赖锁定Material 9.8.1、PyMdown Extensions 13.0，按GitHub公告更新了修复版本），通过GitHub Actions部署Pages。首次发布提交为 `8c3813b6e53bed5397b115f2df20513f1ddbd5c4`；[站点发布任务](https://github.com/vccddd/kestrel-networking-handbook/actions/runs/42573292891)与[Ubuntu示例检查任务](https://github.com/vccddd/kestrel-networking-handbook/actions/runs/42573292858)均成功。Ubuntu检查执行162断言、真实socket验证及正文完整代码块编译，均通过；这不是完整跨平台兼容认证。
 
-MkDocs严格构建通过，[生成站检查](../../../scripts/check_site.py)验证120个HTML页（含源码页与404）、11,885处本地链接/锚点及27个书页的搜索索引。正文结构检查与生成后检查承担不同职责；主题和导航仍由文档工具栈实现。
+MkDocs严格构建通过，[生成站检查](../../../scripts/check_site.py)在首次发布时验证120个HTML页（含源码页与404）、11,885处本地链接/锚点及27个书页的搜索索引。后续新增源码引用会增加生成页与链接数量，以每次构建实际输出为准。正文结构检查与生成后检查承担不同职责；主题和导航仍由文档工具栈实现。
 
 使用Playwright和Chrome分别检查本地站与实际Pages地址，覆盖桌面/390px手机导航、中文搜索、代码复制、正文到源码页跳转，以及横向溢出和页面脚本异常。实际在线首页返回HTTP 200，浏览器功能检查全部通过。可选[浏览器检查脚本](../../../scripts/browser_check.py)需要单独安装Playwright及Chrome，不是普通读者运行实验的前置条件。
 
