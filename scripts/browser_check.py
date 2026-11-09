@@ -25,8 +25,10 @@ def main():
         page.goto(base, wait_until="networkidle")
         expect(page.locator(".md-content h1")).to_contain_text("从零理解")
         search = page.locator('input[data-md-component="search-query"]')
+        # Wait for the theme's worker/index initialization on a cold remote visit.
+        expect(page.locator('.md-search-result__meta')).not_to_contain_text('正在初始化', timeout=45000)
         search.fill("背压")
-        expect(page.locator(".md-search-result__link").first).to_be_visible(timeout=15000)
+        expect(page.locator(".md-search-result__link").first).to_be_visible(timeout=45000)
         href = page.locator(".md-search-result__link").first.get_attribute("href")
         assert urllib.parse.urlsplit(urllib.parse.urljoin(page.url, href)).path.startswith(urllib.parse.urlsplit(base).path)
         page.keyboard.press("Escape")
@@ -52,6 +54,8 @@ def main():
         expect(toggle).to_be_visible()
         toggle.click()
         expect(page.locator("#__drawer")).to_be_checked()
+        # Material uses nested drill-down groups on mobile; open the first part first.
+        page.locator('label.md-nav__link[for="__nav_2"]').click()
         page.locator('.md-sidebar--primary a.md-nav__link[href*="01-network"]').first.click()
         page.wait_for_load_state("networkidle")
         expect(page.locator(".md-content h1")).to_contain_text("第 1 章")

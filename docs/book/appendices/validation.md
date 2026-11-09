@@ -110,8 +110,16 @@ python3 scripts/verify_book_examples.py
 
 指标修正来自另一条失败推理：同步增减事件无法为晚接入监控恢复过去的+1。改为独立状态+ObservableGauge，再补了真实MeterListener迟订阅检查。该检查验证的是状态仪器语义，未证明外部监控系统配置正确。
 
-## D.6 未验证与下一阶段
+## D.6 GitHub 发布补充验证
 
-本次没有覆盖：真实设备、跨主机和弱网链路、TLS/mTLS或证书撤销、数据库/WAL耐久性、重启重放/幂等、进程强杀恢复、长期高并发性能、Windows/Linux兼容、内核及容器资源上限、代理安全部署，以及在线GitBook导入渲染。
+独立教程仓库使用MkDocs Material 9.6.14及MkDocs 1.6.1生成阅读站，通过GitHub Actions部署Pages。首次发布提交为 `8c3813b6e53bed5397b115f2df20513f1ddbd5c4`；[站点发布任务](https://github.com/vccddd/kestrel-networking-handbook/actions/runs/42573292891)与[Ubuntu示例检查任务](https://github.com/vccddd/kestrel-networking-handbook/actions/runs/42573292858)均成功。Ubuntu检查执行162断言、真实socket验证及正文完整代码块编译，均通过；这不是完整跨平台兼容认证。
+
+MkDocs严格构建通过，[生成站检查](../../../scripts/check_site.py)验证120个HTML页（含源码页与404）、11,885处本地链接/锚点及27个书页的搜索索引。正文结构检查与生成后检查承担不同职责；主题和导航仍由文档工具栈实现。
+
+使用Playwright和Chrome分别检查本地站与实际Pages地址，覆盖桌面/390px手机导航、中文搜索、代码复制、正文到源码页跳转，以及横向溢出和页面脚本异常。实际在线首页返回HTTP 200，浏览器功能检查全部通过。可选[浏览器检查脚本](../../../scripts/browser_check.py)需要单独安装Playwright及Chrome，不是普通读者运行实验的前置条件。
+
+## D.7 未验证与下一阶段
+
+本次没有覆盖：真实设备、跨主机和弱网链路、TLS/mTLS或证书撤销、数据库/WAL耐久性、重启重放/幂等、进程强杀恢复、长期高并发性能、Windows兼容与完整跨平台认证、内核及容器资源上限、代理安全部署，以及在线GitBook导入渲染。
 
 取消和错误也尚未穷举所有组合，例如输出Flush长时间阻塞、transport RST与停机竞争、后台消费者异常、管道Complete抛异常。现有代码提供收尾结构与实验边界，不代表这些组合已被实测证明。扩展需求时应按承诺补测试；不要为了增加“测试通过”数字去写只复述实现的断言。
